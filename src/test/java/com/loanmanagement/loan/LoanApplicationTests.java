@@ -8,6 +8,7 @@ class LoanApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

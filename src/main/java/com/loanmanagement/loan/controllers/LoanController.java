@@ -6,9 +6,11 @@ import com.loanmanagement.loan.responses.GroupByInterestPerDayResponse;
 import com.loanmanagement.loan.responses.GroupByLenderIdResponse;
 import com.loanmanagement.loan.responses.GroupByPenaltyPerDayResponse;
 import com.loanmanagement.loan.services.interfaces.ILoanService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -21,7 +23,7 @@ public class LoanController {
     private ILoanService loanService;
 
     @PostMapping
-    public ResponseEntity createLoanEntry(@RequestBody LoanRequest loanRequest) throws ParseException {
+    public ResponseEntity createLoanEntry(@RequestBody @Valid LoanRequest loanRequest) throws ParseException {
         String response = loanService.createLoanEntry(loanRequest);
         return ResponseEntity.accepted().body(loanRequest);
     }
