@@ -2,6 +2,7 @@ package com.loanmanagement.loan.services;
 
 import com.loanmanagement.loan.exception.LoanCannotAcceptException;
 import com.loanmanagement.loan.models.LoanEntity;
+import com.loanmanagement.loan.repositories.LoanRepository;
 import com.loanmanagement.loan.requests.LoanRequest;
 import com.loanmanagement.loan.responses.GroupByInterestPerDayResponse;
 import com.loanmanagement.loan.responses.GroupByLenderIdResponse;
@@ -34,6 +35,9 @@ class LoanServiceTest {
     @LocalServerPort
     private int randomServerPort;
 
+    @Autowired
+    private LoanRepository loanRepository;
+
     public static LoanRequest newLoan =new LoanRequest();
 
     LoanServiceTest() {
@@ -59,6 +63,7 @@ class LoanServiceTest {
         ResponseEntity response = restTemplate.postForEntity("http://localhost:" + randomServerPort + "/loan", newLoan, LoanEntity.class);
         assertEquals(202, response.getStatusCodeValue());
         assertEquals(LoanEntity.class, response.getBody().getClass());
+        loanRepository.deleteById(newLoan.getLoanId());
     }
 
     @Test
